@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:35:21 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/03/31 15:55:59 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/01 18:18:46 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ static void	replace_space_wall(t_main *main_struct)
 	int j;
 
 	i = 0;
-	while (i < Y_MAX)
+	while (i < main_struct->level->y_max)
 	{
 		j = 0;
-		while (j < X_MAX)
+		while (j < main_struct->level->x_max)
 		{
-			if (MAP[i][j] == ' ')
-				MAP[i][j] = '1';
+			if (main_struct->level->map[i][j] == ' ')
+				main_struct->level->map[i][j] = '1';
 			j++;
 		}
 		i++;
@@ -86,19 +86,19 @@ int			parse_cub_map(char *line, t_main *main_struct)
 	char		**temp;
 	int			i;
 
-	Y_MAX++;
+	main_struct->level->y_max++;
 	i = 0;
-	temp = malloc(sizeof(char *) * Y_MAX);
+	temp = malloc(sizeof(char *) * main_struct->level->y_max);
 	if (temp == NULL)
 		return (-1);
-	while (i < Y_MAX - 1)
+	while (i < main_struct->level->y_max - 1)
 	{
-		temp[i] = ft_strdup(MAP[i]);
+		temp[i] = ft_strdup(main_struct->level->map[i]);
 		i++;
 	}
 	temp[i] = ft_strdup(line);
 	free_map_for_realloc(main_struct);
-	MAP = temp;
+	main_struct->level->map = temp;
 	return (0);
 }
 
@@ -111,19 +111,20 @@ int			normalize_map(t_main *main_struct)
 
 	i = 0;
 	get_x_max(main_struct);
-	while (i < Y_MAX)
+	while (i < main_struct->level->y_max)
 	{
-		str_len = ft_strlen(MAP[i]);
-		if (str_len < X_MAX)
+		str_len = ft_strlen(main_struct->level->map[i]);
+		if (str_len < main_struct->level->x_max)
 		{
-			temp = realloc_map_line(main_struct, MAP[i], str_len);
+			temp = realloc_map_line(main_struct,
+							main_struct->level->map[i], str_len);
 			char_space = get_char_space(main_struct, str_len);
 			if (!temp || !char_space)
 				return (-1);
-			ft_strlcat(temp, char_space, X_MAX + 1);
-			free(MAP[i]);
+			ft_strlcat(temp, char_space, main_struct->level->x_max + 1);
+			free(main_struct->level->map[i]);
 			free(char_space);
-			MAP[i] = temp;
+			main_struct->level->map[i] = temp;
 		}
 		i++;
 	}

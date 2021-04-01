@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 15:50:07 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/03/30 17:37:13 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/01 17:59:34 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +20,14 @@ int	check_map_char(t_main *main_struct)
 
 	i = 0;
 	count = 0;
-	while (i < Y_MAX)
+	while (i < main_struct->level->y_max)
 	{
 		j = 0;
-		while (MAP[i][j])
+		while (main_struct->level->map[i][j])
 		{
-			if (ft_charischar(MAP[i][j], "NSEW") == 1)
+			if (ft_charischar(main_struct->level->map[i][j], "NSEW") == 1)
 				count++;
-			if (ft_charischar(MAP[i][j], " 012NSEW") == 0)
+			if (ft_charischar(main_struct->level->map[i][j], " 012NSEW") == 0)
 				return (-1);
 			j++;
 		}
@@ -55,20 +55,19 @@ int	check_map_rows(t_main *main_struct)
 	int j;
 
 	i = 0;
-	while (i < Y_MAX)
+	while (i < main_struct->level->y_max)
 	{
-		j = line_skip_space(MAP[i]);
-		if (j < X_MAX && MAP[i][j] != '1')
+		j = line_skip_space(main_struct->level->map[i]);
+		if (j < main_struct->level->x_max
+		&& main_struct->level->map[i][j] != '1')
 			return (-1);
-		while (j < X_MAX)
+		while (j < main_struct->level->x_max)
 		{
-			j = manage_zero_two_rows(main_struct, i, j);
-			if (j == -1)
+			if ((j = manage_zero_two_rows(main_struct, i, j)) == -1)
 				return (-1);
-			if (MAP[i][j] == ' ')
+			if (main_struct->level->map[i][j] == ' ')
 			{
-				j = manage_space_rows(main_struct, i, j);
-				if (j == -1)
+				if ((j = manage_space_rows(main_struct, i, j)) == -1)
 					return (-1);
 			}
 			j++;
@@ -84,20 +83,19 @@ int	check_map_columns(t_main *main_struct)
 	int	j;
 
 	j = 0;
-	while (j < X_MAX)
+	while (j < main_struct->level->x_max)
 	{
 		i = skip_row_space(main_struct, 0, j);
-		if (i < Y_MAX && MAP[i][j] != '1')
+		if (i < main_struct->level->y_max
+			&& main_struct->level->map[i][j] != '1')
 			return (-1);
-		while (i < Y_MAX)
+		while (i < main_struct->level->y_max)
 		{
-			i = manage_zero_two_columns(main_struct, i, j);
-			if (i == -1)
+			if ((i = manage_zero_two_columns(main_struct, i, j)) == -1)
 				return (-1);
-			if (MAP[i][j] == ' ')
+			if (main_struct->level->map[i][j] == ' ')
 			{
-				i = manage_space_columns(main_struct, i, j);
-				if (i == -1)
+				if ((i = manage_space_columns(main_struct, i, j)) == -1)
 					return (-1);
 			}
 			i++;
@@ -112,7 +110,8 @@ int	skip_row_space(t_main *main_struct, int i, int j)
 	int a;
 
 	a = 0;
-	while (i < Y_MAX && ft_isspace(MAP[i][j]))
+	while (i < main_struct->level->y_max
+	&& ft_isspace(main_struct->level->map[i][j]))
 	{
 		i++;
 		a++;

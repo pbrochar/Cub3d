@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 12:34:35 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/03/31 16:02:45 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/01 16:44:48 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ int	main(int argc, char **argv)
 	}
 	init_move_struct(&move, main_struct);
 	get_pos_start(main_struct);
-	game_loop(main_struct);
+	if (save_bmp == 1)
+	{
+		if (create_bitmap(main_struct) == -1)
+			return (-1);
+	}
+	else
+		game_loop(main_struct);
 	return (0);
 }

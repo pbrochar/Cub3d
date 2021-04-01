@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 21:09:46 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/03/31 16:03:28 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/01 18:31:10 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@
 # include <stdio.h>
 # include <stdbool.h>
 # include <fcntl.h>
-# include <mlx.h>
 # include <math.h>
 
 # include "structs.h"
 # include "define.h"
 # include "libft.h"
+# include "mlx.h"
 
 /*
 ** from srcs/game_loop.c

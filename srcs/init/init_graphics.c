@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:32:53 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/03/30 17:21:22 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/01 18:16:06 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,26 @@ static int	init_textures(t_main *main_struct)
 	int		i;
 	char	*path[5];
 
-	path[0] = NO_PATH;
-	path[1] = SO_PATH;
-	path[2] = WE_PATH;
-	path[3] = EA_PATH;
-	path[4] = SPRITE_PATH;
-	i = 0;
-	while (i < 5)
+	path[0] = main_struct->level->n_texture;
+	path[1] = main_struct->level->s_texture;
+	path[2] = main_struct->level->w_texture;
+	path[3] = main_struct->level->e_texture;
+	path[4] = main_struct->level->sprite;
+	i = -1;
+	while (++i < 5)
 	{
-		TEXTURES[i]->img =
-		mlx_xpm_file_to_image(MLX, path[i], &(TEXTURES[i]->width),
-		&TEXTURES[i]->height);
-		TEXTURES[i]->addr =
-		mlx_get_data_addr(TEXTURES[i]->img, &TEXTURES[i]->bits_per_pixel,
-		&TEXTURES[i]->line_length, &TEXTURES[i]->endian);
-		if (TEXTURES[i]->img == 0 || TEXTURES[i]->addr == 0)
+		main_struct->texture[i]->img =
+		mlx_xpm_file_to_image(main_struct->display->mlx, path[i],
+									&(main_struct->texture[i]->width),
+		&main_struct->texture[i]->height);
+		main_struct->texture[i]->addr =
+		mlx_get_data_addr(main_struct->texture[i]->img,
+										&main_struct->texture[i]->bpp,
+		&main_struct->texture[i]->line_length,
+									&main_struct->texture[i]->endian);
+		if (main_struct->texture[i]->img == 0
+			|| main_struct->texture[i]->addr == 0)
 			return (-1);
-		i++;
 	}
 	return (0);
 }
@@ -63,7 +66,7 @@ static int	malloc_textures(t_main *main_struct)
 		main_struct->texture[i] = malloc(sizeof(t_data));
 		main_struct->texture[i]->img = NULL;
 		main_struct->texture[i]->addr = NULL;
-		if (TEXTURES[i] == NULL)
+		if (main_struct->texture[i] == NULL)
 			return (-1);
 		i++;
 	}
@@ -79,27 +82,35 @@ static void	check_update_screen_size(t_main *main_struct)
 
 	screen_size_x = 0;
 	screen_size_y = 0;
-	mlx_get_screen_size(MLX, &screen_size_x, &screen_size_y);
-	if (RES_X > screen_size_x)
-		RES_X = screen_size_x;
-	if (RES_Y > screen_size_y)
-		RES_Y = screen_size_y;
+	mlx_get_screen_size(main_struct->display->mlx,
+							&screen_size_x, &screen_size_y);
+	if (main_struct->display->res_x > screen_size_x)
+		main_struct->display->res_x = screen_size_x;
+	if (main_struct->display->res_y > screen_size_y)
+		main_struct->display->res_y = screen_size_y;
 }
 
 int			init_graphics(t_main *main_struct)
 {
-	MLX = mlx_init();
-	if (MLX == 0)
+	main_struct->display->mlx = mlx_init();
+	if (main_struct->display->mlx == 0)
 		return (-1);
 	check_update_screen_size(main_struct);
-	WIN = mlx_new_window(MLX, RES_X, RES_Y, "cub3D");
-	if (WIN == 0)
+	if (main_struct->save_bmp == 0)
+	{
+		main_struct->display->win = mlx_new_window(main_struct->display->mlx,
+			main_struct->display->res_x, main_struct->display->res_y, "cub3D");
+		if (main_struct->display->win == 0)
+			return (-1);
+	}
+	main_struct->data->img = mlx_new_image(main_struct->display->mlx,
+			main_struct->display->res_x, main_struct->display->res_y);
+	if (main_struct->data->img == 0)
 		return (-1);
-	IMG = mlx_new_image(MLX, RES_X, RES_Y);
-	if (IMG == 0)
-		return (-1);
-	ADDR = mlx_get_data_addr(IMG, &BPP, &LINE_LENGTH, &ENDIAN);
-	if (ADDR == 0)
+	main_struct->data->addr = mlx_get_data_addr(main_struct->data->img,
+		&main_struct->data->bpp, &main_struct->data->line_length,
+		&main_struct->data->endian);
+	if (main_struct->data->addr == 0)
 		return (-1);
 	if (malloc_textures(main_struct) == -1)
 		return (-1);

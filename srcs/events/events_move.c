@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 17:17:48 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/03/30 17:18:05 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/01 17:10:44 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,32 +14,48 @@
 
 void	move_forward(t_main *main_struct)
 {
-	if (MAP[(int)(POSY + DIRY * MOVE_SPEED)][(int)(POSX)] == '0')
-		POSY += DIRY * MOVE_SPEED;
-	if (MAP[(int)POSY][(int)(POSX + DIRX * MOVE_SPEED)] == '0')
-		POSX += DIRX * MOVE_SPEED;
+	if (main_struct->level->map[(int)(main_struct->ray->pos_y +
+		main_struct->ray->dir_y * CONST_MOVE_SPEED)]
+		[(int)(main_struct->ray->pos_x)] == '0')
+		main_struct->ray->pos_y += main_struct->ray->dir_y * CONST_MOVE_SPEED;
+	if (main_struct->level->map[(int)main_struct->ray->pos_y]
+		[(int)(main_struct->ray->pos_x + main_struct->ray->dir_x
+		* CONST_MOVE_SPEED)] == '0')
+		main_struct->ray->pos_x += main_struct->ray->dir_x * CONST_MOVE_SPEED;
 }
 
 void	move_backward(t_main *main_struct)
 {
-	if (MAP[(int)(POSY - DIRY * MOVE_SPEED)][(int)(POSX)] == '0')
-		POSY -= DIRY * MOVE_SPEED;
-	if (MAP[(int)POSY][(int)(POSX - DIRX * MOVE_SPEED)] == '0')
-		POSX -= DIRX * MOVE_SPEED;
+	if (main_struct->level->map[(int)(main_struct->ray->pos_y
+		- main_struct->ray->dir_y * CONST_MOVE_SPEED)]
+		[(int)(main_struct->ray->pos_x)] == '0')
+		main_struct->ray->pos_y -= main_struct->ray->dir_y * CONST_MOVE_SPEED;
+	if (main_struct->level->map[(int)main_struct->ray->pos_y]
+		[(int)(main_struct->ray->pos_x - main_struct->ray->dir_x
+		* CONST_MOVE_SPEED)] == '0')
+		main_struct->ray->pos_x -= main_struct->ray->dir_x * CONST_MOVE_SPEED;
 }
 
 void	move_right(t_main *main_struct)
 {
-	if (MAP[(int)(POSY)][(int)(POSX + PLANEX * MOVE_SPEED)] == '0')
-		POSX += PLANEX * MOVE_SPEED;
-	if (MAP[(int)(POSY + PLANEY * MOVE_SPEED)][(int)(POSX)] == '0')
-		POSY += PLANEY * MOVE_SPEED;
+	if (main_struct->level->map[(int)(main_struct->ray->pos_y)]
+		[(int)(main_struct->ray->pos_x + main_struct->ray->plane_x
+		* CONST_MOVE_SPEED)] == '0')
+		main_struct->ray->pos_x += main_struct->ray->plane_x * CONST_MOVE_SPEED;
+	if (main_struct->level->map[(int)(main_struct->ray->pos_y
+		+ main_struct->ray->plane_y * CONST_MOVE_SPEED)]
+		[(int)(main_struct->ray->pos_x)] == '0')
+		main_struct->ray->pos_y += main_struct->ray->plane_y * CONST_MOVE_SPEED;
 }
 
 void	move_left(t_main *main_struct)
 {
-	if (MAP[(int)POSY][(int)(POSX - PLANEX * MOVE_SPEED)] == '0')
-		POSX -= PLANEX * MOVE_SPEED;
-	if (MAP[(int)(POSY - PLANEY * MOVE_SPEED)][(int)POSX] == '0')
-		POSY -= PLANEY * MOVE_SPEED;
+	if (main_struct->level->map[(int)main_struct->ray->pos_y]
+		[(int)(main_struct->ray->pos_x - main_struct->ray->plane_x
+		* CONST_MOVE_SPEED)] == '0')
+		main_struct->ray->pos_x -= main_struct->ray->plane_x * CONST_MOVE_SPEED;
+	if (main_struct->level->map[(int)(main_struct->ray->pos_y
+		- main_struct->ray->plane_y * CONST_MOVE_SPEED)]
+		[(int)main_struct->ray->pos_x] == '0')
+		main_struct->ray->pos_y -= main_struct->ray->plane_y * CONST_MOVE_SPEED;
 }

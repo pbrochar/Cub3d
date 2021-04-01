@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 16:49:20 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/03/21 15:21:47 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/01 16:54:28 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	parse_res(char *line, t_main *main_struct)
 	i = 1;
 	while (!ft_isdigit(line[i]))
 		i++;
-	RES_X = ft_atoi(&line[i]);
+	main_struct->display->res_x = ft_atoi(&line[i]);
 	while (ft_isdigit(line[i]))
 		i++;
-	RES_Y = ft_atoi(&line[i]);
+	main_struct->display->res_y = ft_atoi(&line[i]);
 }
 
 void	parse_texture_path(char *line, t_main *main_struct)
@@ -55,16 +55,16 @@ void	parse_texture_path(char *line, t_main *main_struct)
 	while (ft_isspace(line[i]))
 		i++;
 	if (line[0] == 'N')
-		NO_PATH = ft_strdup(&line[i]);
+		main_struct->level->n_texture = ft_strdup(&line[i]);
 	if (line[0] == 'W')
-		WE_PATH = ft_strdup(&line[i]);
+		main_struct->level->w_texture = ft_strdup(&line[i]);
 	if (line[0] == 'E')
-		EA_PATH = ft_strdup(&line[i]);
+		main_struct->level->e_texture = ft_strdup(&line[i]);
 	if (line[0] == 'S')
 	{
 		if (line[1] == 'O')
-			SO_PATH = ft_strdup(&line[i]);
+			main_struct->level->s_texture = ft_strdup(&line[i]);
 		else
-			SPRITE_PATH = ft_strdup(&line[i]);
+			main_struct->level->sprite = ft_strdup(&line[i]);
 	}
 }

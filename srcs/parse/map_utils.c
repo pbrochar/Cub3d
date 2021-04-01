@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/21 16:55:18 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/03/30 20:47:27 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/01 17:19:44 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ void	get_x_max(t_main *main_struct)
 	int i;
 
 	i = 0;
-	while (i < Y_MAX)
+	while (i < main_struct->level->y_max)
 	{
-		str_len = ft_strlen(MAP[i]);
-		if (str_len > X_MAX)
-			X_MAX = str_len;
+		str_len = ft_strlen(main_struct->level->map[i]);
+		if (str_len > main_struct->level->x_max)
+			main_struct->level->x_max = str_len;
 		i++;
 	}
 }
@@ -34,7 +34,7 @@ char	*get_char_space(t_main *main_struct, int str_len)
 	int		i;
 
 	i = 0;
-	len = (X_MAX - str_len);
+	len = (main_struct->level->x_max - str_len);
 	char_space = malloc(sizeof(char) * (len + 1));
 	if (!char_space)
 		return (NULL);
@@ -52,10 +52,10 @@ char	*realloc_map_line(t_main *main_struct, char *map_line, int str_len)
 {
 	char *temp;
 
-	temp = malloc(sizeof(char) * (X_MAX + 1));
+	temp = malloc(sizeof(char) * (main_struct->level->x_max + 1));
 	if (!temp)
 		return (NULL);
-	ft_memset(temp, '\0', X_MAX);
+	ft_memset(temp, '\0', main_struct->level->x_max);
 	temp = ft_memcpy(temp, map_line, str_len);
 	return (temp);
 }
@@ -65,10 +65,10 @@ void	free_map_for_realloc(t_main *main_struct)
 	int i;
 
 	i = 0;
-	while (i < Y_MAX - 1)
+	while (i < main_struct->level->y_max - 1)
 	{
-		free(MAP[i]);
+		free(main_struct->level->map[i]);
 		i++;
 	}
-	free(MAP);
+	free(main_struct->level->map);
 }

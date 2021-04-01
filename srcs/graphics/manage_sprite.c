@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 18:20:41 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/03/29 18:22:05 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/01 17:35:39 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@ static double		calculate_distance_sprite(t_main *main_struct, int index)
 {
 	double dist;
 
-	dist = ((POSX - SPRITE_TAB[index].x)
-			* (POSX - SPRITE_TAB[index].x)
-			+ (POSY - SPRITE_TAB[index].y)
-			* (POSY - SPRITE_TAB[index].y));
+	dist = ((main_struct->ray->pos_x
+			- main_struct->sprite->sprite_tab[index].x)
+			* (main_struct->ray->pos_x
+			- main_struct->sprite->sprite_tab[index].x)
+			+ (main_struct->ray->pos_y
+			- main_struct->sprite->sprite_tab[index].y)
+			* (main_struct->ray->pos_y
+			- main_struct->sprite->sprite_tab[index].y));
 	return (dist);
 }
 
@@ -31,11 +35,11 @@ int					sort_sprite_tab(t_main *main_struct)
 	double	dist_two;
 
 	i = 0;
-	while (i < NB_SPRITE)
+	while (i < main_struct->sprite->nb_sprite)
 	{
 		j = i + 1;
 		dist_one = calculate_distance_sprite(main_struct, i);
-		while (j < NB_SPRITE)
+		while (j < main_struct->sprite->nb_sprite)
 		{
 			dist_two = calculate_distance_sprite(main_struct, j);
 			if (dist_two < dist_one)
@@ -53,7 +57,7 @@ int					lst_to_tab(t_main *main_struct)
 	int		i;
 	int		size;
 
-	size = ft_lstsize((t_list *)SPRITE_LIST);
+	size = ft_lstsize((t_list *)main_struct->sprite->sprite_list);
 	i = 0;
 	sprite_tab = malloc(sizeof(t_point) * size);
 	if (!sprite_tab)
@@ -61,9 +65,10 @@ int					lst_to_tab(t_main *main_struct)
 	ft_bzero(sprite_tab, size);
 	while (i < size)
 	{
-		sprite_tab[i].x = SPRITE_LIST->x;
-		sprite_tab[i].y = SPRITE_LIST->y;
-		SPRITE_LIST = SPRITE_LIST->next;
+		sprite_tab[i].x = main_struct->sprite->sprite_list->x;
+		sprite_tab[i].y = main_struct->sprite->sprite_list->y;
+		main_struct->sprite->sprite_list =
+		main_struct->sprite->sprite_list->next;
 		i++;
 	}
 	main_struct->sprite->sprite_tab = sprite_tab;
@@ -74,12 +79,13 @@ static int			check_duplicate_sprite(t_main *main_struct)
 {
 	t_point	*temp;
 
-	temp = SPRITE_LIST;
+	temp = main_struct->sprite->sprite_list;
 	if (temp != NULL)
 	{
 		while (temp)
 		{
-			if (temp->x == MAPX && temp->y == MAPY)
+			if (temp->x == main_struct->ray->map_x
+				&& temp->y == main_struct->ray->map_y)
 				return (1);
 			temp = temp->next;
 		}
@@ -98,14 +104,14 @@ int					is_sprite(t_main *main_struct)
 	if (!new_sprite)
 		return (-1);
 	new_sprite->next = NULL;
-	new_sprite->x = MAPX;
-	new_sprite->y = MAPY;
-	NB_SPRITE++;
-	if (SPRITE_LIST == NULL)
-		SPRITE_LIST = new_sprite;
+	new_sprite->x = main_struct->ray->map_x;
+	new_sprite->y = main_struct->ray->map_y;
+	main_struct->sprite->nb_sprite++;
+	if (main_struct->sprite->sprite_list == NULL)
+		main_struct->sprite->sprite_list = new_sprite;
 	else
 	{
-		temp = SPRITE_LIST;
+		temp = main_struct->sprite->sprite_list;
 		while (temp->next)
 			temp = temp->next;
 		temp->next = new_sprite;

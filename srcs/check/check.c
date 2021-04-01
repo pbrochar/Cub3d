@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 16:08:24 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/03/31 15:37:23 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/01 17:31:58 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,19 +46,23 @@ int	check_fc_value(char *line)
 
 int	check_data(t_main *main_struct)
 {
-	if (NO_PATH == NULL || SO_PATH == NULL
-		|| WE_PATH == NULL || EA_PATH == NULL
-		|| SPRITE_PATH == NULL)
+	if (main_struct->level->n_texture == NULL
+		|| main_struct->level->s_texture == NULL
+		|| main_struct->level->w_texture == NULL
+		|| main_struct->level->e_texture == NULL
+		|| main_struct->level->sprite == NULL)
 	{
 		ft_printf(ERR_INC_CUB, "texture path (NO/SO/EA/WE/S)");
 		return (-1);
 	}
-	else if (FCOLOR == -1 || CCOLOR == -1)
+	else if (main_struct->level->fcolor == -1
+			|| main_struct->level->ccolor == -1)
 	{
 		ft_printf(ERR_INC_CUB, "floor and sky colors (F/C)");
 		return (-1);
 	}
-	else if (RES_X == -1 || RES_Y == -1)
+	else if (main_struct->display->res_x == -1
+			|| main_struct->display->res_y == -1)
 	{
 		ft_printf(ERR_INC_CUB, "window resolution (R)");
 		return (-1);

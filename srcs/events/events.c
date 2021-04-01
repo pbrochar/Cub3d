@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/24 14:46:43 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/03/31 15:44:34 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/01 18:03:24 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,7 @@ int		events(t_main *main_struct)
 	if (main_struct->move->rotate_left == 1)
 		rotate_left(main_struct);
 	raycasting(main_struct);
+	mlx_put_image_to_window(main_struct->display->mlx,
+	main_struct->display->win, main_struct->data->img, 0, 0);
 	return (0);
 }

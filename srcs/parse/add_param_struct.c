@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/20 21:37:51 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/03/31 16:17:42 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/01 16:52:38 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ int	add_fc_value(char *line, t_main *main_struct)
 		return (-1);
 	}
 	if (line[0] == 'F')
-		FCOLOR = create_rgb(r, g, b);
+		main_struct->level->fcolor = create_rgb(r, g, b);
 	else if (line[0] == 'C')
-		CCOLOR = create_rgb(r, g, b);
+		main_struct->level->ccolor = create_rgb(r, g, b);
 	return (0);
 }
 
@@ -53,7 +53,8 @@ int	add_r_value(char *line, t_main *main_struct)
 	if (check_r_value(line) == -1)
 		return (-1);
 	parse_res(line, main_struct);
-	if (RES_X == 0 || RES_Y == 0)
+	if (main_struct->display->res_x == 0
+		|| main_struct->display->res_y == 0)
 	{
 		ft_printf(ERR_R_SIZE);
 		free(line);
