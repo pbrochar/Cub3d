@@ -1,6 +1,6 @@
 NAME = cub3D
 
-LIB = -Lmlx -lmlx -L/usr/lib -lXext -lX11 -lm
+MLX_DIR = ./mlx
 SRC_DIR = ./srcs/*
 INC_DIR = ./inc
 OBJ_DIR = ./obj
@@ -13,16 +13,13 @@ FLAGS = -O3 -Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME): $(MLX) $(OBJ)
-	cd libft/ ; make ; cd ../
-	$(CC) $(FLAGS) -o $(NAME) $(OBJ) $(LIB) libft/libft.a
+$(NAME): $(OBJ)
+	make -C ./libft
+	make -C ./mlx -lmlx
+	$(CC) $(FLAGS) -o $(NAME) $(OBJ) libft/libft.a -L $(MLX_DIR) -lmlx -lXext -lX11 -lm
 
 %.o: %.c
-	$(CC) -g -I$(INC_DIR) -o $@ -c $<
-
-$(MLX):
-	cd mlx
-	make
+	$(CC) -g -I$(INC_DIR) -I$(MLX_DIR) -o $@ -c $<
 
 bonus : all
 
