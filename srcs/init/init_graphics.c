@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:32:53 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/04/06 15:59:29 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/06 16:02:31 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ static int	malloc_textures(t_main *main_struct)
 	}
 	if (init_textures(main_struct) == -1)
 	{
-		
 		ft_printf(ERR_TEX_PATH);
 		return (-1);
 	}
