@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/29 18:20:41 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/04/01 17:35:39 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/06 15:04:46 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int					sort_sprite_tab(t_main *main_struct)
 		while (j < main_struct->sprite->nb_sprite)
 		{
 			dist_two = calculate_distance_sprite(main_struct, j);
-			if (dist_two < dist_one)
+			if (dist_two > dist_one)
 				swap_point_tab(main_struct, i, j);
 			j++;
 		}

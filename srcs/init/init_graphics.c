@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:32:53 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/04/01 18:16:06 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/06 15:05:42 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static int	init_textures(t_main *main_struct)
 	int		i;
 	char	*path[5];
 
-	path[0] = main_struct->level->n_texture;
-	path[1] = main_struct->level->s_texture;
-	path[2] = main_struct->level->w_texture;
-	path[3] = main_struct->level->e_texture;
+	path[0] = main_struct->level->e_texture;
+	path[1] = main_struct->level->w_texture;
+	path[2] = main_struct->level->s_texture;
+	path[3] = main_struct->level->n_texture;
 	path[4] = main_struct->level->sprite;
 	i = -1;
 	while (++i < 5)
