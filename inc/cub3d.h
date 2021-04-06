@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 21:09:46 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/04/01 18:31:10 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/06 15:54:21 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,6 +139,11 @@ void				free_struct(t_main *main_struct);
 ** from srcs/init/init_graphics.c
 */
 int					init_graphics(t_main *main_struct);
+
+/*
+** from srcs/init/init_graphics_utils.c
+*/
+void				get_data_addr(t_main *main_struct, int i);
 
 /*
 ** from srcs/init/init_raycasting.c

@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/22 15:32:53 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/04/06 15:05:42 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/06 15:59:29 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,21 +37,20 @@ static int	init_textures(t_main *main_struct)
 	path[2] = main_struct->level->s_texture;
 	path[3] = main_struct->level->n_texture;
 	path[4] = main_struct->level->sprite;
-	i = -1;
-	while (++i < 5)
+	i = 0;
+	while (i < 5)
 	{
 		main_struct->texture[i]->img =
 		mlx_xpm_file_to_image(main_struct->display->mlx, path[i],
 									&(main_struct->texture[i]->width),
 		&main_struct->texture[i]->height);
-		main_struct->texture[i]->addr =
-		mlx_get_data_addr(main_struct->texture[i]->img,
-										&main_struct->texture[i]->bpp,
-		&main_struct->texture[i]->line_length,
-									&main_struct->texture[i]->endian);
-		if (main_struct->texture[i]->img == 0
-			|| main_struct->texture[i]->addr == 0)
+		if (main_struct->texture[i]->img == NULL)
 			return (-1);
+		else
+			get_data_addr(main_struct, i);
+		if (main_struct->texture[i]->addr == 0)
+			return (-1);
+		i++;
 	}
 	return (0);
 }
@@ -71,7 +70,11 @@ static int	malloc_textures(t_main *main_struct)
 		i++;
 	}
 	if (init_textures(main_struct) == -1)
+	{
+		
+		ft_printf(ERR_TEX_PATH);
 		return (-1);
+	}
 	return (0);
 }
 
@@ -95,6 +98,10 @@ int			init_graphics(t_main *main_struct)
 	main_struct->display->mlx = mlx_init();
 	if (main_struct->display->mlx == 0)
 		return (-1);
+	if (malloc_textures(main_struct) == -1)
+		return (-1);
+	if (malloc_sprite(main_struct) == -1)
+		return (-1);
 	check_update_screen_size(main_struct);
 	if (main_struct->save_bmp == 0)
 	{
@@ -111,10 +118,6 @@ int			init_graphics(t_main *main_struct)
 		&main_struct->data->bpp, &main_struct->data->line_length,
 		&main_struct->data->endian);
 	if (main_struct->data->addr == 0)
-		return (-1);
-	if (malloc_textures(main_struct) == -1)
-		return (-1);
-	if (malloc_sprite(main_struct) == -1)
 		return (-1);
 	return (0);
 }

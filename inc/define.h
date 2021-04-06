@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 20:57:36 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/04/01 18:20:58 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/06 15:56:49 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # define ERR_INC_CUB "Error\nIncomplete .cub file. Need %s.\n"
 # define ERR_INV_MAP "Error\nInvalid map.\n"
 # define ERR_BMP_CREATE "Error\nCan't create .bmp file.\n"
+# define ERR_TEX_PATH "Error\nTexture path is incorrect.\n"
 
 # define KEY_FORWARD 119
 # define KEY_BACKWARD 115

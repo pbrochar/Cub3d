@@ -6,7 +6,7 @@
 /*   By: pbrochar <pbrochar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/17 14:09:53 by pbrochar          #+#    #+#             */
-/*   Updated: 2021/04/01 18:06:14 by pbrochar         ###   ########.fr       */
+/*   Updated: 2021/04/06 16:01:01 by pbrochar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,14 @@ static void	free_texture_tab(t_main *main_struct)
 	i = 0;
 	while (i < 5)
 	{
-		if (main_struct->texture[i] != NULL)
+		if (main_struct->texture[i]->img != NULL)
 		{
 			mlx_destroy_image(main_struct->display->mlx,
 											main_struct->texture[i]->img);
 			free(main_struct->texture[i]);
 		}
+		else
+			free(main_struct->texture[i]);
 		i++;
 	}
 }
